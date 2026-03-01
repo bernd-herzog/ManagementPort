@@ -25,10 +25,10 @@ public class ManagementPortOptions
   /// <summary>
   /// A callback to configure the WebApplicationBuilder before building the application.
   /// </summary>
-  public Action<WebApplicationBuilder> ConfigureBuilder { get; set; } = _ => { };
+  public Action<WebApplicationBuilder> ConfigureBuilder { get; set; } = builder => { };
 
   /// <summary>
   /// A callback to configure the WebApplication after it has been built.
   /// </summary>
-  public Action<WebApplication> ConfigureApp { get; set; } = _ => { };
+  public Action<WebApplication> ConfigureApp { get; set; } = app => { };
 }

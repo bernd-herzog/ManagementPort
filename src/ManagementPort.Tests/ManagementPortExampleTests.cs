@@ -26,7 +26,7 @@ public class ManagementPortExampleTests
     var processInfo = new ProcessStartInfo
     {
       FileName = "bash",
-      Arguments = $"-c \"curl -s --http2-prior-knowledge --unix-socket /home/vscode/management_port.sock http://localhost/management --data '\\\"{apiKey}\\\"' -H 'Content-Type: application/json'\"",
+      Arguments = $"-c \"curl -s --http2-prior-knowledge --unix-socket ~/management_port.sock http://localhost/management --data '\\\"{apiKey}\\\"' -H 'Content-Type: application/json'\"",
       RedirectStandardOutput = true,
       RedirectStandardError = true,
       UseShellExecute = false,

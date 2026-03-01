@@ -51,5 +51,5 @@ app.Use(async (ctx, next) =>
 Inject secret at runtime via socket into a running docker container:
 
 ```bash
-echo '"my-secret"' | docker exec -i CONTAINER_ID curl -s --http2-prior-knowledge --unix-socket /tmp/admin.sock http://localhost/management -H 'Content-Type: application/json' --data @-
+echo '"my-secret"' | docker exec -i CONTAINER_ID curl -s --http2-prior-knowledge --unix-socket /tmp/admin.sock http://localhost/inject-secret -H 'Content-Type: application/json' --data @-
 ```

@@ -1,0 +1,22 @@
+{
+  "name": "C# (.NET)",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:2-10.0-noble",
+  "features": {
+    "ghcr.io/devcontainers/features/powershell:2": {
+      "version": "lts"
+    },
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "20"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csharp",
+        "ms-vscode.powershell",
+        "dbaeumer.vscode-eslint",
+        "ms-dotnettools.csdevkit"
+      ]
+    }
+  }
+}

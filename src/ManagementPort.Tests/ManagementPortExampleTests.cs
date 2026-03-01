@@ -40,7 +40,7 @@ public class ManagementPortExampleTests
     string output = await process.StandardOutput.ReadToEndAsync();
     string error = await process.StandardError.ReadToEndAsync();
 
-    Assert.That(process.ExitCode, Is.EqualTo(0));
+    Assert.That(process.ExitCode, Is.EqualTo(0), $"StdErr: {error} StdOut: {output}");
     Assert.That(error, Is.EqualTo(""));
     Assert.That(output, Is.EqualTo("OK"));
   }

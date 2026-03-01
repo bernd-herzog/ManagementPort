@@ -50,3 +50,45 @@ jobs:
 
       - name: Test
         run: dotnet test --no-build --verbosity normal --configuration Release
+
+  deployRelease:
+    if: startsWith(github.ref, 'refs/heads/release')
+    runs-on: ubuntu-latest
+    needs: build
+
+    defaults:
+      run:
+        working-directory: ./src
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v6
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: |
+            8.0.x
+            9.0.x
+            10.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: NugetPush
+        env:
+          NUGET_TOKEN_EXISTS: ${{ secrets.NUGET_TOKEN }}
+        if: env.NUGET_TOKEN_EXISTS != ''
+        run: |
+          dotnet nuget push ./ManagementPort/bin/Release/*.nupkg --skip-duplicate --api-key ${{secrets.NUGET_TOKEN}} --source https://api.nuget.org/v3/index.json
+
+      - name: Github release
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.TOKEN }}
+        if: env.GITHUB_TOKEN != ''
+        run: |
+          gh release create ${{env.CURRENT_VERSION}} ./ManagementPort/bin/Release/*.*nupkg --generate-notes

@@ -4,11 +4,21 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 namespace ManagementPort;
 
-public class ManagementPortBuilder
+/// <summary>
+/// Provides functionality to create a WebApplication configured for management endpoints over a Unix socket.
+/// </summary>
+public static class ManagementPortBuilder
 {
+  /// <summary>
+  /// Creates a WebApplication configured to run on a Unix socket for management endpoints.
+  /// </summary>
+  /// <param name="options">The configuration options for the management port.</param>
+  /// <returns>A configured WebApplication instance.</returns>
   public static WebApplication CreateManagementWebApplication(ManagementPortOptions options)
   {
-    var builder = WebApplication.CreateBuilder(options.WebApplicationArgs);
+    options ??= new ManagementPortOptions();
+
+    var builder = WebApplication.CreateBuilder([.. options.WebApplicationArgs]);
 
     string socketPath = GetAbsolutePath(options);
 
@@ -19,8 +29,8 @@ public class ManagementPortBuilder
     {
       serverOptions.ListenUnixSocket(socketPath, listenOptions =>
       {
-        listenOptions.Protocols = HttpProtocols.Http2;
-      });
+      listenOptions.Protocols = HttpProtocols.Http2;
+    });
     });
 
     options.ConfigureBuilder(builder);

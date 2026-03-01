@@ -29,8 +29,8 @@ public static class ManagementPortBuilder
     {
       serverOptions.ListenUnixSocket(socketPath, listenOptions =>
       {
-      listenOptions.Protocols = HttpProtocols.Http2;
-    });
+        listenOptions.Protocols = HttpProtocols.Http2;
+      });
     });
 
     options.ConfigureBuilder(builder);
